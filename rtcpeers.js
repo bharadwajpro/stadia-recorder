@@ -35,14 +35,13 @@ var code = `
                 ]
             }
         }));
-        chunks = undefined;
     }
 
     function startStream() {
         if (!window.srRemoteStream && !window.srRecorder && !window.srChunks) {
             createRemoteStreamWindowObject();
             if (window.srRemoteStream) {
-                window.srRecorder = new MediaRecorder(window.srRemoteStream);
+                window.srRecorder = new MediaRecorder(window.srRemoteStream, getBitrate(window.srRemoteStream));
                 window.srChunks = [];
                 window.srRecorder.ondataavailable = (e) => {
                     window.srChunks.push(e.data);
@@ -62,7 +61,7 @@ var code = `
     }
 
     function pauseResumeStream() {
-        if (window.srRecorder) {f
+        if (window.srRecorder) {
             var state = window.srRecorder.state;
             if (state === "recording") window.srRecorder.pause();
             else if (state === "paused") window.srRecorder.resume();
@@ -89,6 +88,17 @@ var code = `
                 ]
             }
         }));
+    }
+
+    function getBitrate(ms) {
+        var bitrate = 10000000;
+        var height = ms.getVideoTracks()[0].getSettings().height;
+        if (height <= 720) bitrate *= 1;
+        else if (height <= 1080) bitrate *= 2.5;
+        else if (height <= 2160) bitrate *= 3.5;
+        return {
+            bitsPerSecond: bitrate
+        };
     }
 `;
 

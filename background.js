@@ -7,10 +7,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             var interval = setInterval(() => {
                 chrome.downloads.search({id: downloadItem}, (downloadItems) => {
                     if (downloadItems[0]['state'] === "complete" || downloadItems[0]['state'] === "interrupted") {
-                        sendResponse({
-                            type: 'executeOnPage',
-                            code: `window.URL.revokeObjectURL("${message.url}");`
-                        })
+                        chrome.tabs.query({active: true}, (tabs) => {
+                            tabs.forEach(tab => {
+                                chrome.tabs.sendMessage(tab['id'], ({
+                                    type: 'executeOnPage',
+                                    code: `window.URL.revokeObjectURL("${message.url}"); window.srChunks = undefined;`
+                                }));
+                            });
+                        });
                         clearInterval(interval);
                     }
                 })
