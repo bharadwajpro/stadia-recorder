@@ -1,0 +1,44 @@
+{
+    "name": "Stadia Recorder",
+    "version": "1.0",
+    "description": "Record stadia stream and save it to file system",
+    "permissions": [
+        "downloads",
+        "notifications"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "icons": {
+        "16": "ico16.png",
+        "48": "ico48.png",
+        "128": "ico128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://stadia.google.com/*"
+            ],
+            "js": [
+                "contentscriptutils.js",
+                "contentscript.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://stadia.google.com/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "rtcpeers.js"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_title": "Stadia Recorder",
+        "default_popup": "popup.html"
+    },
+    "manifest_version": 2
+}
