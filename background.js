@@ -31,3 +31,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
     }
 });
+
+chrome.commands.onCommand.addListener((command, tab) => {
+    if (command === "start_stream") {
+        chrome.tabs.sendMessage(tab['id'], ({
+            type: 'executeOnPage',
+            code: `startStream();`
+        }));
+    }
+    else if (command === "pause_resume_stream") {
+        chrome.tabs.sendMessage(tab['id'], ({
+            type: 'executeOnPage',
+            code: `pauseResumeStream();`
+        }));
+    }
+    else if (command === "stop_stream") {
+        chrome.tabs.sendMessage(tab['id'], ({
+            type: 'executeOnPage',
+            code: `stopStream();`
+        }));
+    }
+});

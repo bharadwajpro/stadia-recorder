@@ -40,5 +40,28 @@
         "default_title": "Stadia Recorder",
         "default_popup": "popup.html"
     },
+    "commands": {
+        "start_stream": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+5",
+                "mac": "MacCtrl+Shift+5"
+            },
+            "description": "Start stream"
+        },
+        "pause_resume_stream": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+6",
+                "mac": "MacCtrl+Shift+6"
+            },
+            "description": "Pause/Resume stream"
+        },
+        "stop_stream": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+7",
+                "mac": "MacCtrl+Shift+7"
+            },
+            "description": "Stop stream"
+        }
+    },
     "manifest_version": 2
 }

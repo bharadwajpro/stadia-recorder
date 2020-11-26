@@ -52,6 +52,7 @@ var code = `
                     }
                 };
                 window.srRecorder.start();
+                showNotification('Recording started');
             } else {
                 showNotification('No active stream found');
             }
@@ -63,8 +64,14 @@ var code = `
     function pauseResumeStream() {
         if (window.srRecorder) {
             var state = window.srRecorder.state;
-            if (state === "recording") window.srRecorder.pause();
-            else if (state === "paused") window.srRecorder.resume();
+            if (state === "recording") {
+                window.srRecorder.pause();
+                showNotification('Recording paused');
+            }
+            else if (state === "paused") {
+                window.srRecorder.resume();
+                showNotification('Recording resumed');
+            }
         } else {
             showNotification('Did you start recording?');
         }
@@ -73,6 +80,7 @@ var code = `
     function stopStream() {
         if (window.srRecorder) {
             window.srRecorder.stop();
+            showNotification('Recording stopped');
         } else {
             showNotification('No ongoing stream to stop');
         }
